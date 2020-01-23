@@ -1,0 +1,45 @@
+apt-get update -y && apt-get upgrade -y
+
+echo "mysql-server mysql-server/root_password password scores" | debconf-set-selections
+
+echo "mysql-server mysql-server/root_password_again password scores" | debconf-set-selections
+
+apt-get install mysql-server -y
+
+systemctl enable mysql
+systemctl start mysql
+
+cd /home/bitnami
+
+curl https://s3-us-west-2.amazonaws.com/lightsail-demo-public/example-apps/lightsail-server-demo.bundle -O  && git clone -b master lightsail-server-demo.bundle
+
+cd /home/bitnami/lightsail-server-demo && npm install
+
+/opt/bitnami/ctlscript.sh stop apache
+mv /opt/bitnami/apache2/scripts/ctl.sh /opt/bitnami/apache2/scripts/ctl.sh.disabled
+
+chown -R bitnami:bitnami /home/bitnami/lightsail-server-demo
+
+echo "CREATE DATABASE scores; USE scores; CREATE TABLE Scores (Name varchar(255), Score int);" | mysql -h localhost -u root -pscores
+
+----------
+
+
+update db_hosts.config
+
+update client package.json
+
+---------
+
+
+https://s3-us-west-2.amazonaws.com/lightsail-demo-public/triple.jpg
+
+aws rekognition recognize-celebrities \
+ --image "S3Object={Bucket=lightsail-demo-public,Name=triple.jpg}" \
+ --query 'CelebrityFaces[*].Name'
+
+aaws rekognition recognize-celebrities \
+ --image "S3Object={Bucket=lightsail-demo-public,Name=Photos/Matching/Harrison.jpg}" \
+ --query 'CelebrityFaces[*].Name'
+
+aws rekognition recognize-celebrities --image-bytes=fileb:///Users/mikegcol/Downloads/triple.jpg --query 'CelebrityFaces[*].Name'

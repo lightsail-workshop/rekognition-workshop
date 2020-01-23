@@ -1,0 +1,17 @@
+baseURL = "http://lightsailworkshop.com/"
+languageCode = "en-us"
+theme = "hugo-theme-learn"
+title = "Deploying an AI Driven Application with Amazon Lightsail"
+uglyurls = true
+
+[params]
+themeVariant = "mine"
+showVisitedLinks = false
+author = "Mike Coleman"
+description = "Amazon Lightsail Workshop AI Workshop"
+disableSearch = false
+disableAssetsBusting = false
+disableLanguageSwitchingButton = true
+disableShortcutsTitle=true
+disableInlineCopyToClipBoard = true
+#

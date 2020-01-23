@@ -1,0 +1,57 @@
+- Create Lightsail Instance
+
+- Create IAM user
+
+- Install and Configure MySQL
+
+    sudo apt-get update -y && apt-get upgrade -y
+
+    sudo echo "mysql-server mysql-server/root_password password scores" | debconf-set-selections
+
+    sudo echo "mysql-server mysql-server/root_password_again password scores" | debconf-set-selections
+
+    sudo apt-get install mysql-server -y
+
+    sudo systemctl enable mysql
+
+    sudo systemctl start mysql
+
+    echo "CREATE DATABASE scores; USE scores; CREATE TABLE Scores (Name varchar(255), Score int);" | mysql -h localhost -u root -pscores
+
+- Download and unpack the application code, intall dependencies
+
+    cd /home/bitnami
+
+    curl https://s3-us-west-2.amazonaws.com/lightsail-demo-public/example-apps/techtogether.bundle -O  
+    
+    git clone -b master techtogether.bundle
+    
+    cd /home/bitnami/techtogether 
+    
+    npm install
+
+    sudo chown -R bitnami:bitnami /home/bitnami/techtogether <-- may not need to do that
+
+-- Edit the AWS configuration file 
+
+    SECRET_KEY=<your secret key value>
+
+    ACCESS_KEY=<your access key value>
+    
+    <sed command>
+
+-- Stop the built-in apache server
+
+    sudo /opt/bitnami/ctlscript.sh stop apache
+    sudo mv /opt/bitnami/apache2/scripts/ctl.sh /opt/bitnami/apache2/scripts/ctl.sh.disabled
+
+-- Run and test the application
+
+    npm run dev
+
+    http://<lightsail instance ip>/
+
+    
+
+
+
