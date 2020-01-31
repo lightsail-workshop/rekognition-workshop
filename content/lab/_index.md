@@ -11,17 +11,11 @@ weight: 60
 * The ability to edit files with a Linux text editor is helpful, but not mandatory
 
 ### Create Lightsail Instance
-In this first step we're going to create a new instance that you can run you're application on. An instance is just another name for a cloud-based virtual server. In this case you're going to deploy the instance using an existing configruation (known as a blueprint) that is based on the Ubuntu operating system, and includes Node.js already installed. 
+In this first step we're going to create a new instance that you can run you're application on. An instance is just another name for a cloud-based virtual server. In this case you're going to deploy the instance using an existing configuration (known as a blueprint) that is based on the Ubuntu operating system, and includes Node.js already installed. 
 
 * Navigate to the <a href="https://dashboard.eventengine.run/dashboard" target="_blank">Event Engine Dashboard</a> and input the hash found on the slip of paper you were handed when you arrived
 
-* Click on the ***AWS Console*** button
-
-    ![](./images/event_engine_console_button.png?classes=border)
-
-* Click on ***Open AWS Console***
-
-    ![](./images/login_link.png?classes=border)
+* Sign into the <a href="https://console.aws.amazon.com/console/home." target="_blank">AWS console</a>
 
 * In the ***Find Services*** box type ***Lightsail***
 
@@ -46,7 +40,7 @@ In this first step we're going to create a new instance that you can run you're 
 * Scroll all the way to the bottom of the screen and click on ***Create Instance**
 
 ### Create IAM user***
-The applicatin needs a set of credentials in order to access the Rekognition service. In this section ou will use the AWS Identity and Access Management service to create a set of credentials that the API server can use to communicate with Rekognition. It's always a best practice to ensure that any security credentials provide access only to the services that are actually used, in this case the API server needs to to have full access to Rekognition, but only read access to S3. 
+The application needs a set of credentials in order to access the Rekognition service. In this section you will use the AWS Identity and Access Management service to create a set of credentials that the API server can use to communicate with Rekognition. It's always a best practice to ensure that any security credentials provide access only to the services that are actually being used, in this case the API server needs to to have full access to Rekognition, but only read access to S3. 
 
 * Navigate back to the main AWS console. 
 
@@ -92,7 +86,7 @@ The applicatin needs a set of credentials in order to access the Rekognition ser
 
     ![](./images/show_key.png?classes=border)
 
-* You will need both the Access Key ID and the Secret Access Key later in this workshop. ***You should copy and paste both values into a text editor*** (be sure to make a note of which value is which) because if you accidentally close this screen you won't be able access them and will need to repeat these steps to create a new user. 
+* You will need both the Access Key ID and the Secret Access Key later in this workshop. ***You should copy and paste both values into a text editor*** (be sure to make a note of which value is which) because if you accidentally close this screen you won't be able access them and will need to repeat the previous steps to create a new user. 
 
 ### Install and Configure MySQL
 The Node.js blueprint doesn't include MySQL (<a href="https://www.mysql.com" target="_blank">learn more about MySQL</a>), so you will need to install it. After you install the MySQL server you'll configure it to start when the instance boots up, as well as creating the database and table that the application will use. 
@@ -115,7 +109,7 @@ Your SSH web-based client will open in a new browser window
 In each of the steps below you will copy the command as it is written from this guide into the SSH web-based client
 {{% /notice %}}
 
-* Ensure that the system is up to date by running the update and upgrade commands using ```apt-get``` (<a href="https://help.ubuntu.com/community/AptGet/Howto" target="_blank">learn more about apt-get</a>).
+* Ensure that the Ubuntu operating system is up to date by running the update and upgrade commands using ```apt-get``` (<a href="https://help.ubuntu.com/community/AptGet/Howto" target="_blank">learn more about apt-get</a>).
 
         sudo apt-get update -y && sudo apt-get upgrade -y
 
@@ -146,7 +140,7 @@ You will get a warning that using the password on the command line can be inecur
 Your databse is now ready for your application
 
 ### Download and unpack the application code, intall dependencies
-The code for the application is stored in a git bundle file which has been uploaded to an S3 bucket. In this section you're going download the code and upack it using git. They you'll install all the necessary dependencies. 
+The code for the application is stored in a git bundle file which has been uploaded to an S3 bucket. In this section you're going download the code and upack it using git. They you'll use NPM to install all the necessary dependencies. 
 
 * Use `curl` to download the code bundle.
 
@@ -169,10 +163,10 @@ The code for the application is stored in a git bundle file which has been uploa
 In this section you will update the `aws-config.json` file to contain the credentials you created earlier in the workshop. You'll update the file by creating two environment variables, one containing the Access Key ID and the other the Secret Access Key. Then you'll use the `sed` command to do a search and replace in the file, updating it with your credentials. 
 
 {{% notice tip %}}
-You will need the credentials you created earlier for this next section
+You will need the credentials you created earlier for this next section. Be sure to add in your credentials when you copy and paste the commands below. 
 {{% /notice %}}
     
-* In the web-based SSH client enter the following
+* In the web-based SSH client enter the following using your Access Key value
 
         AWS_ACCESS_KEY_ID=your Access Key ID
 
@@ -182,7 +176,7 @@ You will need the credentials you created earlier for this next section
 
         echo $AWS_ACCESS_KEY_ID
 
-* In the web-based SSH client enter the following
+* In the web-based SSH client enter the following using your Secret Access Key value
 
         AWS_SECRET_ACCESS_KEY=your Secret Access Key
 
@@ -212,7 +206,7 @@ You will need the credentials you created earlier for this next section
 
 
 ### Stop the built-in apache server
-The Node.js blueprint has a built-in Apache web server. Unfortunately that server runs on port 80, which is the same port yu want to run your web front end one. In this section you'll stop the web server, and the rename the configuration file so that it won't start back up if the server restarts
+The Node.js blueprint has a built-in Apache web server. Unfortunately that server runs on port 80, which is the same port you want to run your web front end one. In this section you'll stop the web server, and the rename the configuration file so that it won't start back up if the server restarts
 
 * Stop the Apache web server
 
@@ -237,7 +231,7 @@ When you see the following output, you can test your application
     [1]   On Your Network:  http://172.26.15.214:80/
 
 
-To view the running pplication point your web browser at the IP address of you Lightsail instance. You can find the IP address on the card for your instance. 
+To view the running application point your web browser at the IP address of your Lightsail instance. You can find the IP address on the card for your instance. 
 
 * Move back to the Lightsail home page
 
@@ -245,4 +239,10 @@ To view the running pplication point your web browser at the IP address of you L
 
     ![](./images/lightsail_ip.png?classes=border)
 
-* Open a new browser window or tab and paste the Lightsail IP address into the address bar
+* Open a new browser window or tab and paste the Lightsail IP address into the address bar. The matching game should appear. 
+
+### Extra Credit: Creating a DNS entry for your application ###
+When you access web sites you usually enter a domain name such as https://www.amazon.com. Your web browser uses the Domain Name System (DNS) to convert the domain name into an IP address.
+
+<a href = "https://robzhu.github.io/domain2LS/" target= "_blank">This tutorial</a> will show you how to map your instance's IP address to your domain.com domain name. 
+
