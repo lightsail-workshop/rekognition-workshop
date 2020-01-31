@@ -13,8 +13,6 @@ weight: 60
 ### Create Lightsail Instance
 In this first step we're going to create a new instance that you can run you're application on. An instance is just another name for a cloud-based virtual server. In this case you're going to deploy the instance using an existing configuration (known as a blueprint) that is based on the Ubuntu operating system, and includes Node.js already installed. 
 
-* Navigate to the <a href="https://dashboard.eventengine.run/dashboard" target="_blank">Event Engine Dashboard</a> and input the hash found on the slip of paper you were handed when you arrived
-
 * Sign into the <a href="https://console.aws.amazon.com/console/home." target="_blank">AWS console</a>
 
 * In the ***Find Services*** box type ***Lightsail***
