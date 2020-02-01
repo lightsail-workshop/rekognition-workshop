@@ -12,6 +12,8 @@ The application itself is comprised of a web front-end written in React and an A
 
 At the end of the game the player's score is saved into a MySQL database. 
 
+![](./images/architecture.png?classes=border)
+
 For the purposes of this workshop all three application tiers (front-end, API server, and database) are all running on a single Lightsail instance. If you finish the workshop early, you may want to try and separate the front-end and API servers out onto their own Lightsail intances, and use an Amazon Lightsail mysql database to store the scores. 
 
 ### What is Amazon Lightsail
